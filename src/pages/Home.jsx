@@ -37,16 +37,16 @@ const Home = () => {
     return (
         <div className='homepage'>
             {/* Hero Section */}
-            <section className='bg-[#D2E0F6]  w-[100%] h-auto flex flex-col-reverse md:flex-row justify-center items-center gap-3 lg:gap-10 px-6 py-16 '>
-                <div className='w-[80%] text-center md:text-left md:w-[50%] lg:w-[40%] text-[#071822]'>
+            <section className='bg-[#D2E0F6]  w-[100%] h-auto flex flex-col md:flex-row justify-center items-center gap-7 lg:gap-10 px-6 py-16 '>
+                <div className='w-[100%] text-left md:text-left md:w-[60%] lg:w-[50%] text-[#071822]'>
                     <p className='mb-4'>{`Trending product in ${currYear}`}</p>
-                    <h1 className='font-semibold text-4xl lg:text-[2.7rem] leading-tight mb-4'>Make Your Interior More Minimalistic & Modern</h1>
-                    <p className='mb-4'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis odio voluptatum alias libero tempora consectetur!</p>
+                    <h1 className='font-semibold text-3xl md:text-4xl lg:text-[2.7rem] leading-tight mb-4'>Make Your Interior More Minimalistic & Modern</h1>
+                    <p className='mb-4 text-sm md:text-md lg:text-xl'>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Corporis odio voluptatum alias libero tempora consectetur!</p>
                     <Link to='/shop'>
-                        <button type='button' className='bg-[#081B31] text-white px-4 py-2 border-0 rounded-sm cursor-pointer'>SHOP NOW</button>
+                        <button type='button' className='bg-[#081B31] text-white px-4 py-2 border-0 rounded cursor-pointer'>SHOP NOW</button>
                     </Link>
                 </div>
-                <div className='w-auto h-auto'>
+                <div className='w-auto h-auto '>
                     <img src={heroImage} alt="heroImage" className='w-[100%] h-[100%]' />
                 </div>
             </section>
@@ -65,19 +65,19 @@ const Home = () => {
             </section>
 
             {/* Timer count */}
-            <section className='bg-[#09172E] h-auto sm:h-[300px] flex flex-col-reverse sm:flex-row justify-center text-white items-center px-6'>
-                <div className='sm:w-[40%]'>
+            <section className='bg-[#09172E] h-auto sm:h-[300px] flex flex-col-reverse sm:flex-row justify-center text-white items-center px-6 pt-5 p-10'>
+                <div className='sm:w-[40%] text-center sm:text-left mt-5 sm:mt-0'>
                     <div className='mb-3 text-center sm:text-start'>
                         <h4 className='mb-1 text-sm sm:text-md'>Limited Offers</h4>
                         <h3 className='text-[1rem] sm:text-[1.3rem]'>Quality Armchair</h3>
                     </div>
                     <Clock />
                     <Link to='/shop'>
-                        <button className='px-4 py-2 bg-white text-[#071822] rounded text-[16px] mt-6'>Visit Store</button>
+                        <button className='px-4 py-2 bg-white text-[#071822] rounded text-[14px] sm:text-[16px] mt-6'>Visit Store</button>
                     </Link>
                 </div>
-                <div className='flex justify-start sm:justify-end items-center'>
-                    <img src={counterImg} alt="counterImage" className='sm:w-[80%] h-[100%]' />
+                <div className='hidden sm:flex justify-end items-center '>
+                    <img src={counterImg} alt="counterImage" className='w-[80%] h-[100%]' />
                 </div>
             </section>
 
