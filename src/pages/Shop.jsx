@@ -26,7 +26,7 @@ const Shop = () => {
         <div>
             <CommonSection title="Products" />
             {/* Filter Section */}
-            <section className='flex justify-center my-16'>
+            <section className='flex justify-center my-12 md:my-16'>
                 <div className='sm:w-[90%] flex justify-between md:flex-row flex-col gap-4 items-center '>
                     <div className='md:w-[30%] text-center '>
                         <select
