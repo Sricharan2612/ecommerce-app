@@ -56,16 +56,24 @@ const Header = () => {
                         <div className='w-[16px] h-[16px] flex items-center justify-center absolute top-[-5px] right-[-7px] text-sm font-semibold rounded-[50%] bg-blue-950 text-white'>0</div>
                     </div>
                     <div className='relative cursor-pointer'>
-                        <RiShoppingBagLine fontSize={23} className='font-bold' />
-                        <span className='w-[16px] h-[16px] flex items-center justify-center absolute top-[-5px] right-[-5px] text-sm font-semibold rounded-full bg-blue-950 text-white'>{totalQuantity}</span>
+                        <Link to='/cart'>
+                            <RiShoppingBagLine fontSize={23} className='font-bold' />
+                        </Link>
+                        <span className='w-[16px] h-[16px] flex items-center justify-center absolute top-[-5px] right-[-5px] text-sm font-semibold rounded-full bg-blue-950 text-white'>
+                            {totalQuantity}
+                        </span>
                     </div>
                     <div onClick={() => setMenuList(!menuList)} className='w-[2rem] cursor-pointer' >
                         <img src={userIcon} alt="userIcon" />
                         <div style={{ display: menuList ? 'block' : 'none' }}
                             className='absolute  top-16 right-16 md:right-28 lg:right-36 shadow-xl border  text-[16px] hidden bg-white'>
                             <ul>
-                                <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign Up</li>
-                                <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Log In</li>
+                                <Link to='/signup'>
+                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign Up</li>
+                                </Link>
+                                <Link to='/login'>
+                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Log In</li>
+                                </Link>
                                 <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
                             </ul>
                         </div>

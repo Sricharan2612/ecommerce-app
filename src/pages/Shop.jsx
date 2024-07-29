@@ -22,6 +22,19 @@ const Shop = () => {
         const searchedProducts = products.filter((product) => product.productName.toLowerCase().includes(searchTerm));
         setProductsData(searchedProducts);
     };
+
+    const handleSort = (e) => {
+        const sortValue = e.target.value;
+        if (sortValue != 'Sort By') {
+            if (sortValue === 'ascending') {
+                const filteredProducts = products.toSorted((a, b) => a.price - b.price);
+                setProductsData(filteredProducts);
+            } else {
+                const filteredProducts = products.toSorted((a, b) => b.price - a.price);
+                setProductsData(filteredProducts);
+            }
+        }
+    };
     return (
         <div>
             <CommonSection title="Products" />
@@ -42,7 +55,9 @@ const Shop = () => {
                     </div>
                     <div className='md:w-[70%] flex justify-end gap-2 px-4 md:px-0'>
                         <div className='border-2 '>
-                            <select className='bg-[#081A36] text-white border border-[#081A36] px-3 py-3 rounded'>
+                            <select
+                                onChange={handleSort}
+                                className='bg-[#081A36] text-white border border-[#081A36] px-3 py-3 rounded'>
                                 <option>Sort By</option>
                                 <option value="ascending">Low to High</option>
                                 <option value="descending">High to Low</option>
