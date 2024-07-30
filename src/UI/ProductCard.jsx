@@ -22,9 +22,9 @@ const ProductCard = ({ product }) => {
         toast.success("Product added sucessfully");
     };
     return (
-        <div className='w-[270px] cursor-pointer shadow-2xl'>
+        <div className='w-[290px] cursor-pointer shadow-2xl'>
             <div className='overflow-hidden '>
-                <img src={product.imgUrl} alt="productImage" className='w-[100%] h-[100%] hover:scale-[1.2] duration-100' />
+                <img src={product.imgUrl} alt="productImage" className='w-[100%] h-[100%] hover:scale-[1.2] duration-100 aspect-[20/18]' />
             </div>
             <div className='p-2 text-[#071822]'>
                 <Link to={`/shop/${product.id}`}>

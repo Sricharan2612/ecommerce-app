@@ -74,11 +74,9 @@ const Shop = () => {
             </section>
 
             <section className='px-10 mb-16'>
-                <div className='text-center'>
-                    {
-                        productsData.length === 0 ? <h1 className='text-xl'>No products found!</h1> : <ProductList data={productsData} />
-                    }
-                </div>
+                {
+                    productsData.length === 0 ? <h1 className='text-xl'>No products found!</h1> : <ProductList data={productsData} />
+                }
             </section>
         </div>
     );

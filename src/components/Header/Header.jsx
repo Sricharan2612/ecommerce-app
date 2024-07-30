@@ -8,18 +8,38 @@ import { RiShoppingBagLine } from "react-icons/ri";
 import { RiMenuFill } from "react-icons/ri";
 import { IoCloseSharp } from "react-icons/io5";
 //React Router
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 //redux
 import { useSelector } from 'react-redux';
+//customHooks
+import useAuth from '../../customHooks/useAuth';
+//Firebase
+import { auth } from '../../Firebase/firebase.config';
+import { signOut } from 'firebase/auth';
+import { toast } from 'react-toastify';
 
 const Header = () => {
     const { pathname } = useLocation();
+    const { currentUser } = useAuth();
+    const navigate = useNavigate();
     //States
     const [menuList, setMenuList] = useState(false);
     const [menuToggle, setMenuToggle] = useState(false);
     //Redux
     const { totalQuantity } = useSelector(data => data.cart);
+    //Handlers
+    const logoutUser = async () => {
+        signOut(auth)
+            .then(() => {
+                toast.success("Logged out ");
+                navigate('/home');
+            })
+            .catch((error) => {
+                toast.error(error.message);
+            });
+
+    };
 
     const navLinks = [
         {
@@ -36,13 +56,16 @@ const Header = () => {
         },
     ];
 
+
     return (
         <header className='w-full h-[4rem] bg-white px-4 py-4 sticky top-0 left-0 z-40 shadow-xl'>
-            <nav className='flex justify-between md:justify-around items-center h-full'>
-                <div className="flex items-cente cursor-pointer text-[#071822]">
+            <nav className='flex justify-between md:justify-around items-center h-full sm:pe-10 md:pe-0'>
+                {/* Nav Logo */}
+                <div className="flex items-center cursor-pointer text-[#071822]">
                     <img src={logo} alt="logo" className='w-[1.5rem]' />
                     <h1 className='text-xl font-bold ms-2 '>Multimart</h1>
                 </div>
+                {/* Nav Links */}
                 <ul className="hidden md:flex items-center gap-12 text-[#071822]">
                     {navLinks.map((link, index) => (
                         <Link key={index} to={`${link.path}`}>
@@ -50,12 +73,13 @@ const Header = () => {
                         </Link>
                     ))}
                 </ul>
+                {/* Nav Buttons */}
                 <div className='flex items-center gap-4 sm:gap-8 text-[#071822]'>
-                    <div className='relative cursor-pointer'>
+                    <div className='relative cursor-pointer active:scale-[1.1] duration-75'>
                         <FaRegHeart fontSize={21} className='font-bold' />
                         <div className='w-[16px] h-[16px] flex items-center justify-center absolute top-[-5px] right-[-7px] text-sm font-semibold rounded-[50%] bg-blue-950 text-white'>0</div>
                     </div>
-                    <div className='relative cursor-pointer'>
+                    <div className='relative cursor-pointer active:scale-[1.1] duration-75'>
                         <Link to='/cart'>
                             <RiShoppingBagLine fontSize={23} className='font-bold' />
                         </Link>
@@ -64,17 +88,40 @@ const Header = () => {
                         </span>
                     </div>
                     <div onClick={() => setMenuList(!menuList)} className='w-[2rem] cursor-pointer' >
-                        <img src={userIcon} alt="userIcon" />
-                        <div style={{ display: menuList ? 'block' : 'none' }}
+                        <div className='flex items-center w-[100px] gap-1'>
+                            <div className='bg-transparent flex justify-center items-center  active:scale-[1.1] duration-75  overflow-hidden'>
+                                <img src={currentUser ? currentUser.photoURL : userIcon} alt="userIcon" className='w-[40px] h-[40px] object-cover rounded-full' />
+                            </div>
+                            <p style={{ display: currentUser ? 'block' : 'none' }}
+                                className=' hidden sm:block font-[500] text-md md:text-lg'>{currentUser?.displayName}</p>
+                        </div>
+                        <div style={{ display: menuList ? 'block' : 'none', }}
                             className='absolute  top-16 right-16 md:right-28 lg:right-36 shadow-xl border  text-[16px] hidden bg-white'>
                             <ul>
-                                <Link to='/signup'>
-                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign Up</li>
-                                </Link>
-                                <Link to='/login'>
-                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Log In</li>
-                                </Link>
-                                <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
+                                {
+                                    currentUser
+                                        ? (
+                                            <>
+                                                <li onClick={logoutUser} className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign out</li>
+                                                <Link to='/'>
+                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
+                                                </Link>
+                                            </>
+                                        )
+                                        : (
+                                            <>
+                                                <Link to='/signup'>
+                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign Up</li>
+                                                </Link>
+                                                <Link to='/login'>
+                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Log In</li>
+                                                </Link>
+                                                <Link to='/'>
+                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
+                                                </Link>
+                                            </>
+                                        )
+                                }
                             </ul>
                         </div>
                     </div>

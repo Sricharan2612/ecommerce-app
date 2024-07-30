@@ -55,7 +55,7 @@ const Home = () => {
             <Services />
 
             {/* Products Section */}
-            <section className='trending_products px-6 xl:px-48 mt-24'>
+            <section className='trending_products px-10 xl:px-48 mt-24'>
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Trending Products</h2>
                 <ProductList data={trendingProducts} />
             </section>

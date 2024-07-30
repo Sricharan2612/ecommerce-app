@@ -54,20 +54,18 @@ const Cart = () => {
                     </div>
                     <p className='mt-2 pe-3 text-md'>taxes and shipping will calculate in checkout</p>
                     <div className='mt-6 flex flex-col justify-center items-center gap-3 '>
-                        <button
-                            className='bg-[#081B31] text-white px-4 py-3 border-0 rounded cursor-pointer active:scale-[0.95] duration-100 w-[100%] font-semibold'>
-                            <Link to='/shop'>
-                                Continue Shopping
-                            </Link>
-                        </button>
-
-                        <button
-                            className='bg-[#081B31] text-white px-4 py-3 border-0 rounded cursor-pointer active:scale-[0.95] duration-100 w-[100%] font-semibold'>
-                            <Link to='/checkout'>
+                        <Link to='/checkout' className='w-[100%]'>
+                            <button
+                                className='bg-[#081B31] text-white px-4 py-3 border-0 rounded cursor-pointer active:scale-[0.95] duration-100 w-[100%] font-semibold'>
                                 Checkout
-                            </Link>
-                        </button>
-
+                            </button>
+                        </Link>
+                        <Link to='/shop' className='w-[100%]'>
+                            <button
+                                className='bg-[#081B31] text-white px-4 py-3 border-0 rounded cursor-pointer active:scale-[0.95] duration-100 w-[100%] font-semibold'>
+                                Continue Shopping
+                            </button>
+                        </Link>
                     </div>
                 </div>
             </section >
