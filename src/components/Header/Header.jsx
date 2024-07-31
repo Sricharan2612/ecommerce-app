@@ -90,7 +90,7 @@ const Header = () => {
                     <div onClick={() => setMenuList(!menuList)} className='w-[2rem] cursor-pointer' >
                         <div className='flex items-center w-[100px] gap-1'>
                             <div className='bg-transparent flex justify-center items-center  active:scale-[1.1] duration-75  overflow-hidden'>
-                                <img src={currentUser ? currentUser.photoURL : userIcon} alt="userIcon" className='w-[40px] h-[40px] object-cover rounded-full' />
+                                <img src={currentUser ? currentUser.photoURL : userIcon} alt="userProfileIcon" className='w-[40px] h-[40px] object-center rounded-full' />
                             </div>
                             <p style={{ display: currentUser ? 'block' : 'none' }}
                                 className=' hidden sm:block font-[500] text-md md:text-lg'>{currentUser?.displayName}</p>
@@ -103,7 +103,7 @@ const Header = () => {
                                         ? (
                                             <>
                                                 <li onClick={logoutUser} className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign out</li>
-                                                <Link to='/'>
+                                                <Link to='/dashboard'>
                                                     <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
                                                 </Link>
                                             </>
@@ -116,7 +116,7 @@ const Header = () => {
                                                 <Link to='/login'>
                                                     <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Log In</li>
                                                 </Link>
-                                                <Link to='/'>
+                                                <Link to='/dashboard'>
                                                     <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
                                                 </Link>
                                             </>
