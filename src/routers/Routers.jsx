@@ -10,7 +10,10 @@ import Signup from '../pages/Signup';
 //Admin
 import AllProducts from '../admin/AllProducts';
 import AddProducts from '../admin/AddProducts';
+import Orders from '../admin/Orders';
+import Users from '../admin/Users';
 import Dashboard from '../admin/Dashboard';
+
 //Router
 import { Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
@@ -31,6 +34,8 @@ const Routers = () => {
                 <Route path='/dashboard' element={<Dashboard />} />
                 <Route path='/dashboard/all-products' element={<AllProducts />} />
                 <Route path='/dashboard/add-product' element={<AddProducts />} />
+                <Route path='/dashboard/orders' element={<Orders />} />
+                <Route path='/dashboard/users' element={<Users />} />
             </Route>
         </Routes>
     );

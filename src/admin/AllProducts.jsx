@@ -1,61 +1,74 @@
 import React from 'react';
 //customHook
 import useGetData from '../customHooks/useGetData';
+//Firebase
+import { db } from '../Firebase/firebase.config';
+import { doc, deleteDoc } from 'firebase/firestore';
+//Firebase Storage
+import { storage } from '../Firebase/firebase.config';
+import { ref, deleteObject } from 'firebase/storage';
+//React toastify
+import { toast } from 'react-toastify';
+
 
 const AllProducts = () => {
-    const { data: products } = useGetData("products");
-    console.log(products);
+    const { data: products, loading } = useGetData("products");
+
+    //Hanlders
+    const deleteProduct = async (id, name) => {
+        const productImageref = ref(storage, `productImages/${name}`);
+        deleteObject(productImageref);
+        await deleteDoc(doc(db, 'products', id));
+        toast.success('Product deleted!');
+    };
 
     return (
-        <section className='flex justify-center my-20'>
+        <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0'>
             <div className='md:w-[85%] lg:w-[75%]'>
+                <h2 className='text-[22px] font-bold text-center mb-16'>Products</h2>
                 {
-                    // cartItems.length === 0
-                    //     ? (
-                    //         <h2 className='text-xl text-center font-semibold'>No items in the cart!</h2>
-                    //     )
-                    //     : (
-                    <table className='w-[100%]  table-fixed text-center text-[#071822] font-semibold' >
-                        <thead >
-                            <tr className='border-b border-[#071822]'>
-                                <th className='w-[25%] sm:w-[10%]'>Image</th>
-                                <th className='w-[30%] sm:w-auto'>Title</th>
-                                <th>Category</th>
-                                <th>Price</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {products.map((item, index) => (
-                                <Tr item={item} key={index} />
-                            ))}
-                        </tbody>
-                    </table>
-                    // )
+                    loading
+                        ? (<h2 className='text-xl font-semibold py-5 text-center'>Loading...</h2>)
+                        : (
+                            products.length === 0
+                                ? (
+                                    <h2 className='text-xl text-center font-semibold py-5'>No product exists!</h2>
+                                )
+                                : (
+                                    <table className='w-[100%] table-fixed text-center text-[#071822] font-semibold' >
+                                        <thead >
+                                            <tr className='border-b border-[#071822]'>
+                                                <th className='w-[25%] sm:w-[10%]'>Image</th>
+                                                <th className='w-auto sm:w-[20%]'>Title</th>
+                                                <th className='truncate'>Category</th>
+                                                <th>Price</th>
+                                                <th className='w-auto'>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {products.map((item, index) => (
+                                                <tr key={index} className='border-b border-[#071822]' >
+                                                    <td ><img src={item.imgUrl} alt="" className='sm:w-[130px] sm:h-[130px] object-center' /></td>
+                                                    <td className='text-sm sm:text-lg'>{item.title}</td>
+                                                    <td className='text-sm sm:text-lg'> {item.category}</td>
+                                                    <td className='text-sm sm:text-lg'>₹{item.price}</td>
+                                                    <td>
+                                                        <button
+                                                            onClick={() => deleteProduct(item.id, item.title)}
+                                                            className='bg-red-600 px-1 py-1 sm:px-3 sm:py-2 rounded text-white active:scale-[1.1] duration-75'>
+                                                            Delete
+                                                        </button>
+                                                    </td>
+                                                </ tr>
+                                            ))
+                                            }
+                                        </tbody>
+                                    </table>
+                                )
+                        )
                 }
             </div>
-        </section>
-    );
-};
-
-
-const Tr = ({ item }) => {
-    // const dispatch = useDispatch();
-    // //Handlers
-    // const removeFromCart = (id) => {
-    //     dispatch(cartActions.deleteItem(id));
-    //     toast.success("Item deleted sucessfully");
-    // };
-    return (
-        <tr className='border-b border-[#071822]'>
-            <td ><img src={item.imgUrl} alt="" className='w-[100px] h-[100px] object-center' /></td>
-            <td>{item.title}</td>
-            <td>{item.category}</td>
-            <td>{item.price}</td>
-            <td className='active:scale-[1.2] text-red-700'>
-                <button className='bg-red-600 px-3 py-2 rounded text-white'>Delete</button>
-            </td>
-        </tr >
+        </section >
     );
 };
 

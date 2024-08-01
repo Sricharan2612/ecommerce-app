@@ -34,7 +34,7 @@ const AddProducts = () => {
         //Adding product to the firestore and storage
         try {
             const docRef = collection(db, 'products');
-            const storageRef = ref(storage, `productImages/${productName + Date.now()}`);
+            const storageRef = ref(storage, `productImages/${productName}`);
             const uploadTask = uploadBytesResumable(storageRef, productImage);
 
             uploadTask.on('state_changed',
@@ -72,7 +72,7 @@ const AddProducts = () => {
                 loading
                     ? (
                         <div className='w-[100%] h-[50vh] flex justify-center items-center font-semibold text-xl'>
-                            <h2>Loading...</h2>
+                            <h2>Please wait...</h2>
                         </div>
                     )
                     : (

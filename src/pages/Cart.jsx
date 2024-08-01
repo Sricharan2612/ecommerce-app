@@ -84,7 +84,7 @@ const Tr = ({ item }) => {
         <tr className='border-b border-[#071822]'>
             <td ><img src={item.image} alt="" className='w-[100px] h-[100px] object-center' /></td>
             <td>{item.name}</td>
-            <td>{item.price}</td>
+            <td>₹{item.price}</td>
             <td>{item.quantity}</td>
             <td className='active:scale-[1.2] text-red-700' onClick={() => removeFromCart(item.id)}>
                 <i className="ri-delete-bin-line cursor-pointer text-[18px] "></i>
