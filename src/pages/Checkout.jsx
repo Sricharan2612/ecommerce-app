@@ -5,6 +5,10 @@ import { useSelector } from 'react-redux';
 
 const Checkout = () => {
     const { totalQuantity, totalAmount } = useSelector(data => data.cart);
+    //Handlers
+    const commaSeperatedPrice = (number) => {
+        return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    };
     return (
         <div>
             <CommonSection title='Checkout' />
@@ -74,7 +78,7 @@ const Checkout = () => {
                             </h6>
                             <h6 className='flex justify-between items-center mb-3'>
                                 Subtotal:
-                                <span>₹{totalAmount}</span>
+                                <span>₹{commaSeperatedPrice(totalAmount)}</span>
                             </h6>
                             <h6 className='flex justify-between items-center mb-4'>
                                 <span>
@@ -86,7 +90,7 @@ const Checkout = () => {
                             </h6>
                             <h4 className='flex justify-between items-center mb-7 text-lg sm:text-xl font-semibold border-t border-[#474959] pt-5'>
                                 Total Cost:
-                                <span className='font-[500]'>₹{totalAmount}</span>
+                                <span className='font-[500]'>₹{commaSeperatedPrice(totalAmount)}</span>
                             </h4>
                             <button
                                 className='bg-white text-[#081B31] px-4 py-2 border-0 rounded cursor-pointer active:scale-[0.95] duration-100 w-[100%] font-semibold'>

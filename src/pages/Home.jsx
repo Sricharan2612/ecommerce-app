@@ -7,10 +7,13 @@ import { Link } from 'react-router-dom';
 //Components
 import Services from '../components/Services/Services';
 import ProductList from '../UI/ProductList';
-import products from '../assets/data/products';
+// import products from '../assets/data/products';
 import Clock from '../UI/Clock';
+//customHooks
+import useGetData from '../customHooks/useGetData';
 
 const Home = () => {
+    const { data: products, loading } = useGetData('products');
     //States
     const [trendingProducts, setTrendingProducts] = useState([]);
     const [bestSalesProducts, setBestSalesProducts] = useState([]);
@@ -32,7 +35,7 @@ const Home = () => {
         setWirelessProducts(filteredWirelessProducts);
         setPopularProducts(filteredPopularProducts);
 
-    }, []);
+    }, [products]);
     const currYear = new Date().getFullYear();
     return (
         <div className='homepage'>
@@ -47,7 +50,9 @@ const Home = () => {
                     </Link>
                 </div>
                 <div className='w-auto h-auto '>
-                    <img src={heroImage} alt="heroImage" className='w-[100%] h-[100%]' />
+                    <Link to='/home'>
+                        <img src={heroImage} alt="heroImage" className='w-[100%] h-[100%]' />
+                    </Link>
                 </div>
             </section>
 
@@ -57,11 +62,19 @@ const Home = () => {
             {/* Products Section */}
             <section className='trending_products px-10 xl:px-48 mt-24'>
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Trending Products</h2>
-                <ProductList data={trendingProducts} />
+                {
+                    loading
+                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        : (<ProductList data={trendingProducts} />)
+                }
             </section>
             <section className='best_sales px-10 xl:px-48 mt-24 mb-16'>
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Best Sales</h2>
-                <ProductList data={bestSalesProducts} />
+                {
+                    loading
+                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        : (<ProductList data={bestSalesProducts} />)
+                }
             </section>
 
             {/* Timer count */}
@@ -84,16 +97,28 @@ const Home = () => {
             {/* Product Section */}
             <section className='new_arrivals px-10 xl:px-48 mt-20 mb-16'>
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>New Arrivals</h2>
-                <ProductList data={mobileProducts} />
+                {
+                    loading
+                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        : (<ProductList data={mobileProducts} />)
+                }
 
             </section>
             <section className='wireless_products px-10 xl:px-48 mt-20 mb-16'>
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Wireless Products</h2>
-                <ProductList data={wirelessProducts} />
+                {
+                    loading
+                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        : (<ProductList data={wirelessProducts} />)
+                }
             </section>
             <section className='popular_category px-10 xl:px-48 mt-20 mb-16'>
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Popular in Category</h2>
-                <ProductList data={popularProducts} />
+                {
+                    loading
+                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        : (<ProductList data={popularProducts} />)
+                }
             </section>
 
         </div>

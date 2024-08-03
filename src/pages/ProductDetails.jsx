@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 //Components and Pages
 import CommonSection from '../UI/CommonSection';
-import products from '../assets/data/products';
+// import products from '../assets/data/products';
 import ProductList from '../UI/ProductList';
 //React Router
 import { useParams } from 'react-router-dom';
@@ -9,40 +9,69 @@ import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../Redux/slices/cartSlice';
 import { toast } from 'react-toastify';
+import useGetData from '../customHooks/useGetData';
+//Firebase
+import { db } from '../Firebase/firebase.config';
+import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 
 
 const ProductDetails = () => {
-    //Product Data
-    const { id } = useParams();
-    const product = products.find((product) => product.id === id);
-    const relatedproducts = products.filter((prod) => prod.category === product.category);
     const dispatch = useDispatch();
     //States
     const [tab, setTab] = useState('desc');
     const [rating, setRating] = useState(null);
+    const [product, setProduct] = useState({});
+    //Product Data
+    const { id } = useParams();
+    const { data: products } = useGetData('products');
+    const relatedproducts = products.filter((prod) => prod.category === product.category);
+    const docRef = doc(db, 'products', id);
+    //UseEffect
+    useEffect(() => {
+        const getProduct = async () => {
+            const productDoc = await getDoc(docRef);
+
+            if (productDoc.exists()) {
+                setProduct(productDoc.data());
+            } else {
+                toast.warning('No products found!');
+            }
+        };
+        getProduct();
+    }, [id, docRef]);
+
     //useRef
     const reviewUser = useRef('');
     const reviewMsg = useRef('');
 
     //Handlers
-    const formSubmitHandler = (e) => {
+    const formSubmitHandler = async (e) => {
         e.preventDefault();
 
         const reviewUserName = reviewUser.current.value;
         const reviewUserMsg = reviewMsg.current.value;
 
         const reviewObj = {
-            userName: reviewUserName,
-            message: reviewUserMsg,
+            name: reviewUserName,
+            text: reviewUserMsg,
             rating
         };
-        console.log(reviewObj);
+
+        try {
+            await updateDoc(docRef, {
+                reviews: arrayUnion(reviewObj),
+                avgRating: rating
+            });
+            toast.success('Review submitted sucessfully');
+        } catch (error) {
+            toast.error('Review not submitted!');
+        }
 
         reviewUser.current.value = '';
         reviewMsg.current.value = '';
         setRating(null);
 
-        toast.success('Review submitted');
+
 
     };
 
@@ -56,21 +85,27 @@ const ProductDetails = () => {
         toast.success("Product added sucessfully");
     };
 
+    const commaSeperatedPrice = (number) => {
+        return number?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    };
+
     useEffect(() => {
         window.scrollTo(0, 0);
-    }, [product]);
+    }, [id]);
 
     return (
         <div>
             <CommonSection title={product.productName} />
             {/* Product Info */}
-            <section className='flex justify-center pb-16 sm:pb-24 pt-3 sm:pt-0'>
-                <div className='w-[90%] flex flex-col sm:flex-row justify-center gap-10'>
-                    <div className='lg:w-[50%] min-w-[280px]'>
-                        <img src={product.imgUrl} alt="productImage" className='w-[100%] h-[100%] object-center' />
+            <section className='flex justify-center pb-16 sm:pb-24 pt-3 sm:pt-0 mt-16 sm:mt-20'>
+                <div className='w-[90%] flex flex-col sm:flex-row justify-center gap-10 md:gap-28'>
+                    <div className='w-auto flex justify-center sm:justify-start'>
+                        <div className='w-fit h-[280px] sm:h-[450px]'>
+                            <img src={product.imgUrl} alt="productImage" className='w-[100%] h-[100%] object-contain' />
+                        </div>
                     </div>
-                    <div className='sm:mt-28'>
-                        <h2 className='font-semibold text-3xl text-[#071822] mb-2'>{product.productName}</h2>
+                    <div className='mt-2 md:mt-7 w-[60%]'>
+                        <h2 className='font-semibold text-2xl md:text-3xl text-[#071822] mb-2 truncate'>{product.productName}</h2>
                         <div className='flex items-center gap-3 mb-3'>
                             <div className='text-lg text-[#FF8750]'>
                                 <span><i className="ri-star-fill"></i></span>
@@ -81,7 +116,7 @@ const ProductDetails = () => {
                             </div>
                             <p>({product.avgRating} ratings)</p>
                         </div>
-                        <span className='text-2xl font-[500] '>₹{product.price}</span>
+                        <span className='text-2xl font-[500] '>₹{commaSeperatedPrice(product.price)}</span>
                         <p className='mt-3 mb-6'>{product.shortDesc}</p>
                         <button
                             onClick={addToCart}
@@ -111,7 +146,7 @@ const ProductDetails = () => {
                         onClick={() => setTab('rev')}
                         className='cursor-pointer text-[#071822]'
                     >
-                        Reviews ({product.reviews.length})
+                        Reviews ({product.reviews?.length})
                     </h6>
                 </div>
                 {
@@ -127,9 +162,11 @@ const ProductDetails = () => {
                                     {
                                         product.reviews?.map((review, index) => (
                                             <li key={index}>
-                                                <h6 className='font-[600] mb-1'>John Doe</h6>
-                                                <span className='text-[#FF8750] font-[600]'>{review.rating} (rating)</span>
-                                                <p className='mt-3'>{review.text}</p>
+                                                <div className='flex gap-2'>
+                                                    <h6 className='font-[600]'>{review.name}</h6>
+                                                    <span className='text-[#FF8750] font-[600]'>{review.rating} (rating)</span>
+                                                </div>
+                                                <p className='mt-2'>{review.text}</p>
                                             </li>
                                         ))
                                     }
@@ -189,6 +226,7 @@ const ProductDetails = () => {
                                     </form>
                                 </div>
                             </div>
+
                         )
                 }
 

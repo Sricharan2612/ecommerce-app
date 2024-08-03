@@ -21,15 +21,6 @@ const AddProducts = () => {
     const addProduct = async (e) => {
         e.preventDefault();
 
-        // const product = {
-        //     title: productName,
-        //     shortDesc,
-        //     description,
-        //     price,
-        //     category,
-        //     imgUrl: productImage,
-        // };
-
         setLoading(true);
         //Adding product to the firestore and storage
         try {
@@ -46,12 +37,14 @@ const AddProducts = () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);
 
                     await addDoc(docRef, {
-                        title: productName,
+                        productName,
                         shortDesc,
                         description,
                         price,
                         category,
                         imgUrl: downloadURL,
+                        avgRating: 0,
+                        reviews: []
                     });
                     setLoading(false);
                     toast.success("Product added sucessfully!");
@@ -141,11 +134,11 @@ const AddProducts = () => {
                                                 id='product_category'
                                                 value={category}
                                                 onChange={(e) => setCategory(e.target.value)}>
-                                                <option value="">Select Category</option>
+                                                <option>Select Category</option>
                                                 <option value="chair">Chair</option>
                                                 <option value="sofa">Sofa</option>
                                                 <option value="mobile">Mobile</option>
-                                                <option value="watches">Watches</option>
+                                                <option value="watch">Watch</option>
                                                 <option value="wireless">Wireless</option>
                                             </select>
                                         </div>

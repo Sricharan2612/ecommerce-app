@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 //Components and Pages
 import CommonSection from '../UI/CommonSection';
-import products from '../assets/data/products';
+// import products from '../assets/data/products';
 import ProductList from '../UI/ProductList';
+import useGetData from '../customHooks/useGetData';
 
 const Shop = () => {
-    const [productsData, setProductsData] = useState(products);
-    //handlers
+    const { data: products, loading } = useGetData('products');
+    const [productsData, setProductsData] = useState([]);
+
+    //UseEffect
+    useEffect(() => {
+        setProductsData(products);
+    }, [products]);
+
+    //Handlers
     const handleFilter = (e) => {
         const filterValue = e.target.value;
 
@@ -27,10 +35,10 @@ const Shop = () => {
         const sortValue = e.target.value;
         if (sortValue != 'Sort By') {
             if (sortValue === 'ascending') {
-                const filteredProducts = products.toSorted((a, b) => a.price - b.price);
+                const filteredProducts = productsData.toSorted((a, b) => a.price - b.price);
                 setProductsData(filteredProducts);
             } else {
-                const filteredProducts = products.toSorted((a, b) => b.price - a.price);
+                const filteredProducts = productsData.toSorted((a, b) => b.price - a.price);
                 setProductsData(filteredProducts);
             }
         }

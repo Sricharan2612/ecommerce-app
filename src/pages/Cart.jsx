@@ -1,6 +1,6 @@
 import React from 'react';
 import CommonSection from '../UI/CommonSection';
-import tdImg from '../assets/images/arm-chair-01.jpg';
+
 //Redux
 import { useSelector, useDispatch } from 'react-redux';
 import { cartActions } from '../Redux/slices/cartSlice';
@@ -9,7 +9,9 @@ import { Link } from 'react-router-dom';
 
 const Cart = () => {
     const { cartItems, totalAmount } = useSelector(data => data.cart);
-
+    const commaSeperatedPrice = (number) => {
+        return number?.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    };
     return (
         <div>
             <CommonSection title='Cart' />
@@ -48,7 +50,7 @@ const Cart = () => {
                         <h6 className='text-2xl font-semibold flex items-center justify-between'>
                             Subtotal:
                             <span className='text-2xl font-bold'>
-                                ₹{totalAmount}
+                                ₹{commaSeperatedPrice(totalAmount)}
                             </span>
                         </h6>
                     </div>
@@ -80,14 +82,20 @@ const Tr = ({ item }) => {
         dispatch(cartActions.deleteItem(id));
         toast.success("Item deleted sucessfully");
     };
+
+    const commaSeperatedPrice = (number) => {
+        return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    };
+
+
     return (
-        <tr className='border-b border-[#071822]'>
-            <td ><img src={item.image} alt="" className='w-[100px] h-[100px] object-center' /></td>
-            <td>{item.name}</td>
-            <td>₹{item.price}</td>
+        <tr className='border-b border-[#071822] text-lg'>
+            <td ><img src={item.image} alt="" className='w-[130px] h-[130px] object-contain py-2' /></td>
+            <td className='truncate'>{item.name}</td>
+            <td>₹{commaSeperatedPrice(item.price)}</td>
             <td>{item.quantity}</td>
             <td className='active:scale-[1.2] text-red-700' onClick={() => removeFromCart(item.id)}>
-                <i className="ri-delete-bin-line cursor-pointer text-[18px] "></i>
+                <i className="ri-delete-bin-line cursor-pointer text-[23px] "></i>
             </td>
         </tr>
     );

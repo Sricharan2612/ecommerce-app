@@ -22,6 +22,10 @@ const AllProducts = () => {
         toast.success('Product deleted!');
     };
 
+    const commaSeperatedPrice = (number) => {
+        return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+    };
+
     return (
         <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0'>
             <div className='md:w-[85%] lg:w-[75%]'>
@@ -47,14 +51,14 @@ const AllProducts = () => {
                                         </thead>
                                         <tbody>
                                             {products.map((item, index) => (
-                                                <tr key={index} className='border-b border-[#071822]' >
-                                                    <td ><img src={item.imgUrl} alt="" className='sm:w-[130px] sm:h-[130px] object-center' /></td>
-                                                    <td className='text-sm sm:text-lg'>{item.title}</td>
+                                                <tr key={index} className='border-b border-[#071822] my-2' >
+                                                    <td ><img src={item.imgUrl} alt="" className='sm:w-[150px] sm:h-[150px] object-contain py-2' /></td>
+                                                    <td className='text-sm sm:text-lg'>{item.productName}</td>
                                                     <td className='text-sm sm:text-lg'> {item.category}</td>
-                                                    <td className='text-sm sm:text-lg'>₹{item.price}</td>
+                                                    <td className='text-sm sm:text-lg'>₹{commaSeperatedPrice(item.price)}</td>
                                                     <td>
                                                         <button
-                                                            onClick={() => deleteProduct(item.id, item.title)}
+                                                            onClick={() => deleteProduct(item.id, item.productName)}
                                                             className='bg-red-600 px-1 py-1 sm:px-3 sm:py-2 rounded text-white active:scale-[1.1] duration-75'>
                                                             Delete
                                                         </button>

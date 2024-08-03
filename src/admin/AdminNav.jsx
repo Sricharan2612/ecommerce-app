@@ -62,10 +62,12 @@ const AdminNav = () => {
     return (
         <>
             <header className='w-full h-[5rem] bg-[#091C33] px-4 py-4 sticky top-0 left-0 z-40' >
-                <nav className='flex justify-between md:justify-evenly items-center  h-full'>
+                <nav className='flex justify-between md:justify-evenly items-center h-full'>
                     {/* Nav Logo */}
                     <div className="flex items-center cursor-pointer text-white">
-                        <h1 className='text-xl font-bold ms-2 '>Multimart</h1>
+                        <Link to='/home'>
+                            <h1 className='text-xl font-bold ms-2 '>Multimart</h1>
+                        </Link>
                     </div>
                     {/* Search Bar */}
                     <div className='hidden sm:flex sm:w-[40%] lg:w-[50%] rounded-md overflow-hidden bg-white text-[#071832]'>
@@ -87,8 +89,8 @@ const AdminNav = () => {
                                 <div className='bg-transparent flex justify-center items-center  active:scale-[1.1] duration-75  overflow-hidden'>
                                     <img src={currentUser ? currentUser.photoURL : userIcon} alt="userProfileIcon" className='w-[40px] h-[40px] object-center rounded-full' />
                                 </div>
-                                <p className=' hidden lg:block font-[500] text-md lg:text-lg ms-1'>{currentUser?.displayName}
-                                </p>
+                                {/* <p className=' hidden lg:block font-[500] text-md lg:text-lg ms-1'>{currentUser?.displayName}
+                                </p> */}
                             </div>
                             <div style={{ display: menuList ? 'block' : 'none', }}
                                 className='absolute  top-20 right-16 md:right-28 lg:right-36 shadow-xl border  text-[16px] hidden bg-white text-[#071832]'>
