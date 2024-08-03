@@ -14,6 +14,10 @@ const Shop = () => {
         setProductsData(products);
     }, [products]);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, []);
+
     //Handlers
     const handleFilter = (e) => {
         const filterValue = e.target.value;

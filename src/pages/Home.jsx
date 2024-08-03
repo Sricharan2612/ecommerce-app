@@ -36,7 +36,10 @@ const Home = () => {
         setPopularProducts(filteredPopularProducts);
 
     }, [products]);
+
     const currYear = new Date().getFullYear();
+
+
     return (
         <div className='homepage'>
             {/* Hero Section */}
