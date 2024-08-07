@@ -20,6 +20,7 @@ import { signOut } from 'firebase/auth';
 import { toast } from 'react-toastify';
 
 const Header = () => {
+    const adminEmail = process.env.REACT_APP_ADMIN_EMAIL;
     const { pathname } = useLocation();
     const { currentUser } = useAuth();
     const navigate = useNavigate();
@@ -56,6 +57,7 @@ const Header = () => {
         },
     ];
 
+    console.log(adminEmail);
 
     return (
         <header className='w-full h-[4.5rem] bg-white px-4 py-4 sticky top-0 left-0 z-40 shadow-xl'>
@@ -74,6 +76,14 @@ const Header = () => {
                             <li className='text-[1.1rem]' style={{ fontWeight: pathname === link.path ? '700' : '' }}>{link.name}</li>
                         </Link>
                     ))}
+                    {currentUser?.email === process.env.REACT_APP_ADMIN_EMAIL
+                        ? (
+                            <Link to='/dashboard'>
+                                <li className='bg-[#081B31] text-white px-3 py-2 rounded-md font-[500] active:scale-[0.9] duration-100 cursor-pointer'>Admin</li>
+                            </Link>
+                        )
+                        : ''
+                    }
                 </ul>
                 {/* Nav Buttons */}
                 <div className='flex items-center gap-4 sm:gap-8 text-[#071822]'>
@@ -104,22 +114,16 @@ const Header = () => {
                                     currentUser
                                         ? (
                                             <>
-                                                <li onClick={logoutUser} className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign out</li>
-                                                <Link to='/dashboard'>
-                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
-                                                </Link>
+                                                <li onClick={logoutUser} className='px-10 py-3 hover:bg-[#D4E3FD] text-lg'>Sign out</li>
                                             </>
                                         )
                                         : (
                                             <>
                                                 <Link to='/signup'>
-                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign Up</li>
+                                                    <li className='px-10 py-3 hover:bg-[#D4E3FD] text-lg'>Sign Up</li>
                                                 </Link>
                                                 <Link to='/login'>
-                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Log In</li>
-                                                </Link>
-                                                <Link to='/dashboard'>
-                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
+                                                    <li className='px-10 py-3 hover:bg-[#D4E3FD] text-lg'>Log In</li>
                                                 </Link>
                                             </>
                                         )

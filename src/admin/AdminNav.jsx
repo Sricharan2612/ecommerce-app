@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 //Images
-import logo from '../assets/images/eco-logo.png';
 import userIcon from '../assets/images/user-icon.png';
 
 //React Router
@@ -98,10 +97,7 @@ const AdminNav = () => {
                                     {
                                         currentUser && (
                                             <>
-                                                <li onClick={logoutUser} className='px-10 py-2 hover:bg-[#D4E3FD]'>Sign out</li>
-                                                <Link to='/dashboard'>
-                                                    <li className='px-10 py-2 hover:bg-[#D4E3FD]'>Dashboard</li>
-                                                </Link>
+                                                <li onClick={logoutUser} className='px-10 py-3 hover:bg-[#D4E3FD] text-lg'>Sign out</li>
                                             </>
                                         )
                                     }

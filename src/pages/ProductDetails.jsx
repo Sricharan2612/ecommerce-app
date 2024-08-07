@@ -14,6 +14,8 @@ import useGetData from '../customHooks/useGetData';
 import { db } from '../Firebase/firebase.config';
 import { arrayUnion, doc, getDoc, updateDoc } from 'firebase/firestore';
 
+import { hourglass } from 'ldrs';
+
 
 const ProductDetails = () => {
     const dispatch = useDispatch();
@@ -21,6 +23,7 @@ const ProductDetails = () => {
     const [tab, setTab] = useState('desc');
     const [rating, setRating] = useState(null);
     const [product, setProduct] = useState({});
+    const [loading, setLoading] = useState(false);
     //Product Data
     const { id } = useParams();
     const { data: products } = useGetData('products');
@@ -29,11 +32,14 @@ const ProductDetails = () => {
     //UseEffect
     useEffect(() => {
         const getProduct = async () => {
+            // setLoading(true);
             const productDoc = await getDoc(docRef);
 
             if (productDoc.exists()) {
+                // setLoading(false);
                 setProduct(productDoc.data());
             } else {
+                // setLoading(false);
                 toast.warning('No products found!');
             }
         };
@@ -47,7 +53,7 @@ const ProductDetails = () => {
     //Handlers
     const formSubmitHandler = async (e) => {
         e.preventDefault();
-
+        setLoading(true);
         const reviewUserName = reviewUser.current.value;
         const reviewUserMsg = reviewMsg.current.value;
 
@@ -62,13 +68,15 @@ const ProductDetails = () => {
                 reviews: arrayUnion(reviewObj),
                 avgRating: rating
             });
+            setLoading(false);
             toast.success('Review submitted sucessfully');
         } catch (error) {
+            setLoading(false);
             toast.error('Review not submitted!');
         }
 
-        reviewUser.current.value = '';
-        reviewMsg.current.value = '';
+        reviewUser.current = '';
+        reviewMsg.current = '';
         setRating(null);
 
 
@@ -92,6 +100,8 @@ const ProductDetails = () => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [id]);
+
+    hourglass.register();
 
     return (
         <div>
@@ -171,62 +181,76 @@ const ProductDetails = () => {
                                         ))
                                     }
                                 </ul>
-                                <div className='md:w-[70%] m-auto mt-16'>
-                                    <h4 className='text-2xl font-[600] mb-6'>Leave your experience</h4>
-                                    <form action="" onSubmit={formSubmitHandler}>
-                                        <div className='mb-6'>
-                                            <input
-                                                ref={reviewUser}
-                                                type="text"
-                                                placeholder='Enter name' className='w-[100%] border border-[#071822] rounded py-[8px] px-[20px] focus:outline-none'
-                                                required
-                                            />
-                                        </div>
-                                        <div className='flex items-center gap-5 sm:gap-10 text-[#FF8750] font-[600] mb-6 text-md'>
-                                            <span
-                                                onClick={() => setRating(1)}
-                                                className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>1
-                                                <i className="ri-star-fill"></i>
-                                            </span>
-                                            <span
-                                                onClick={() => setRating(2)}
-                                                className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>2
-                                                <i className="ri-star-fill"></i>
-                                            </span>
-                                            <span
-                                                onClick={() => setRating(3)}
-                                                className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>3
-                                                <i className="ri-star-fill"></i>
-                                            </span>
-                                            <span
-                                                onClick={() => setRating(4)}
-                                                className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>4
-                                                <i className="ri-star-fill"></i>
-                                            </span>
-                                            <span
-                                                onClick={() => setRating(5)}
-                                                className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>5
-                                                <i className="ri-star-fill"></i>
-                                            </span>
-                                        </div>
-                                        <div className='mb-6'>
-                                            <textarea
-                                                ref={reviewMsg}
-                                                rows={4}
-                                                type="text"
-                                                placeholder='Review Message...' className='w-[100%] border border-[#071822] rounded py-[8px] px-[20px] focus:outline-none'
-                                                required
-                                            />
-                                        </div>
-                                        <button
-                                            type='submit'
-                                            className='bg-[#081B31] text-white px-4 py-2 border-0 rounded cursor-pointer active:scale-[0.95] duration-100'>
-                                            Submit
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
 
+                                {loading
+                                    ? (<div className='flex justify-center items-center my-20'>
+                                        <l-hourglass
+                                            size="50"
+                                            bg-opacity="0.1"
+                                            speed="1.75"
+                                            color="#081B31"
+                                        ></l-hourglass>
+                                    </div>
+                                    )
+                                    : (
+                                        <div className='md:w-[70%] m-auto mt-16'>
+                                            <h4 className='text-2xl font-[600] mb-6'>Leave your experience</h4>
+                                            <form action="" onSubmit={formSubmitHandler}>
+                                                <div className='mb-6'>
+                                                    <input
+                                                        ref={reviewUser}
+                                                        type="text"
+                                                        placeholder='Enter name' className='w-[100%] border border-[#071822] rounded py-[8px] px-[20px] focus:outline-none'
+                                                        required
+                                                    />
+                                                </div>
+                                                <div className='flex items-center gap-5 sm:gap-10 text-[#FF8750] font-[600] mb-6 text-md'>
+                                                    <span
+                                                        onClick={() => setRating(1)}
+                                                        className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>1
+                                                        <i className="ri-star-fill"></i>
+                                                    </span>
+                                                    <span
+                                                        onClick={() => setRating(2)}
+                                                        className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>2
+                                                        <i className="ri-star-fill"></i>
+                                                    </span>
+                                                    <span
+                                                        onClick={() => setRating(3)}
+                                                        className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>3
+                                                        <i className="ri-star-fill"></i>
+                                                    </span>
+                                                    <span
+                                                        onClick={() => setRating(4)}
+                                                        className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>4
+                                                        <i className="ri-star-fill"></i>
+                                                    </span>
+                                                    <span
+                                                        onClick={() => setRating(5)}
+                                                        className='flex items-center gap-2 cursor-pointer active:scale-[1.2]'>5
+                                                        <i className="ri-star-fill"></i>
+                                                    </span>
+                                                </div>
+                                                <div className='mb-6'>
+                                                    <textarea
+                                                        ref={reviewMsg}
+                                                        rows={4}
+                                                        type="text"
+                                                        placeholder='Review Message...' className='w-[100%] border border-[#071822] rounded py-[8px] px-[20px] focus:outline-none'
+                                                        required
+                                                    />
+                                                </div>
+                                                <button
+                                                    type='submit'
+                                                    className='bg-[#081B31] text-white px-4 py-2 border-0 rounded cursor-pointer active:scale-[0.95] duration-100'>
+                                                    Submit
+                                                </button>
+                                            </form>
+                                        </div>
+                                    )
+                                }
+
+                            </div >
                         )
                 }
 
@@ -235,7 +259,7 @@ const ProductDetails = () => {
                     <h2 className='font-[600] text-[20px] mb-5'>You might also like</h2>
                     <ProductList data={relatedproducts} />
                 </div>
-            </section>
+            </section >
 
 
         </div >

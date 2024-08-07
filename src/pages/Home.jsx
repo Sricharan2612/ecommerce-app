@@ -11,6 +11,8 @@ import ProductList from '../UI/ProductList';
 import Clock from '../UI/Clock';
 //customHooks
 import useGetData from '../customHooks/useGetData';
+//Loader
+import { dotSpinner } from 'ldrs';
 
 const Home = () => {
     const { data: products, loading } = useGetData('products');
@@ -39,6 +41,8 @@ const Home = () => {
 
     const currYear = new Date().getFullYear();
 
+    //Loader Initialization
+    dotSpinner.register();
 
     return (
         <div className='homepage'>
@@ -67,7 +71,15 @@ const Home = () => {
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Trending Products</h2>
                 {
                     loading
-                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        ? (
+                            <div className='flex justify-center items-center pt-16 pb-10'>
+                                <l-dot-spinner
+                                    size="50"
+                                    speed="0.9"
+                                    color="#081B31"
+                                ></l-dot-spinner>
+                            </div>
+                        )
                         : (<ProductList data={trendingProducts} />)
                 }
             </section>
@@ -75,7 +87,15 @@ const Home = () => {
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Best Sales</h2>
                 {
                     loading
-                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        ? (
+                            <div className='flex justify-center items-center pt-16 pb-10'>
+                                <l-dot-spinner
+                                    size="50"
+                                    speed="0.9"
+                                    color="#081B31"
+                                ></l-dot-spinner>
+                            </div>
+                        )
                         : (<ProductList data={bestSalesProducts} />)
                 }
             </section>
@@ -102,7 +122,15 @@ const Home = () => {
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>New Arrivals</h2>
                 {
                     loading
-                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        ? (
+                            <div className='flex justify-center items-center pt-16 pb-10'>
+                                <l-dot-spinner
+                                    size="50"
+                                    speed="0.9"
+                                    color="#081B31"
+                                ></l-dot-spinner>
+                            </div>
+                        )
                         : (<ProductList data={mobileProducts} />)
                 }
 
@@ -111,7 +139,15 @@ const Home = () => {
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Wireless Products</h2>
                 {
                     loading
-                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        ? (
+                            <div className='flex justify-center items-center pt-16 pb-10'>
+                                <l-dot-spinner
+                                    size="50"
+                                    speed="0.9"
+                                    color="#081B31"
+                                ></l-dot-spinner>
+                            </div>
+                        )
                         : (<ProductList data={wirelessProducts} />)
                 }
             </section>
@@ -119,7 +155,15 @@ const Home = () => {
                 <h2 className='text-[#071822] text-center mb-4 text-2xl font-bold'>Popular in Category</h2>
                 {
                     loading
-                        ? (<h4 className='text-xl font-semibold py-3 '>Loading</h4>)
+                        ? (
+                            <div className='flex justify-center items-center pt-16 pb-10'>
+                                <l-dot-spinner
+                                    size="50"
+                                    speed="0.9"
+                                    color="#081B31"
+                                ></l-dot-spinner>
+                            </div>
+                        )
                         : (<ProductList data={popularProducts} />)
                 }
             </section>

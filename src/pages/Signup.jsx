@@ -15,6 +15,8 @@ import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 
 //React Toastify
 import { toast } from 'react-toastify';
+//Loader
+import { quantum } from 'ldrs';
 
 
 const Signup = () => {
@@ -68,10 +70,11 @@ const Signup = () => {
             setLoading(false);
             toast.error("something went wrong");
         }
-
-
-
     };
+
+    //Loader Initialization
+    quantum.register();
+
     return (
         <div>
             {/* Sign Up Section */}
@@ -79,7 +82,11 @@ const Signup = () => {
                 loading
                     ? (
                         <div className='flex justify-evenly  items-center h-[90vh]'>
-                            <h6>Loading...</h6>
+                            <l-quantum
+                                size="45"
+                                speed="1.75"
+                                color='#081B31'
+                            ></l-quantum>
                         </div>
                     )
                     : (

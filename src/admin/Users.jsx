@@ -1,9 +1,10 @@
 import React from 'react';
-import user from '../assets/images/user-icon.png';
 import useGetData from '../customHooks/useGetData';
 import { db } from '../Firebase/firebase.config';
 import { doc, deleteDoc } from 'firebase/firestore';
 import { toast } from 'react-toastify';
+//Loader
+import { hourglass } from 'ldrs';
 
 const Users = () => {
     const { data: users, loading } = useGetData("users");
@@ -12,6 +13,10 @@ const Users = () => {
         await deleteDoc(doc(db, 'users', id));
         toast.success("User deleted");
     };
+
+    //Loader Initialization
+    hourglass.register();
+
     return (
         <section className='flex justify-center mt-12 mb-24 px-3 md:px-0'>
             <div className='md:w-[85%] lg:w-[75%]'>
@@ -19,7 +24,13 @@ const Users = () => {
                 {
                     loading
                         ? (
-                            <h2 className='text-xl font-semibold py-5 text-center'>Loading...</h2>
+                            <div className='flex justify-center items-center my-32'>
+                                <l-hourglass
+                                    size="75"
+                                    speed="1.75"
+                                    color='#081B31'
+                                ></l-hourglass>
+                            </div>
                         )
                         : (
                             users.length === 0

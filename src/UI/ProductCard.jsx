@@ -1,6 +1,6 @@
 import React from 'react';
 //React Router
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //Redux
 import { useDispatch } from 'react-redux';
 import { cartActions } from '../Redux/slices/cartSlice';
@@ -9,7 +9,6 @@ import { toast } from 'react-toastify';
 
 
 const ProductCard = ({ product }) => {
-    const navigate = useNavigate();
     const dispatch = useDispatch();
     const addToCart = () => {
         dispatch(cartActions.addItem({

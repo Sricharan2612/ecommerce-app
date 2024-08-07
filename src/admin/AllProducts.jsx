@@ -9,6 +9,8 @@ import { storage } from '../Firebase/firebase.config';
 import { ref, deleteObject } from 'firebase/storage';
 //React toastify
 import { toast } from 'react-toastify';
+//Loader
+import { hourglass } from 'ldrs';
 
 
 const AllProducts = () => {
@@ -26,13 +28,25 @@ const AllProducts = () => {
         return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     };
 
+    //Loader Initialization
+    hourglass.register();
+
+
     return (
         <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0'>
             <div className='md:w-[85%] lg:w-[75%]'>
                 <h2 className='text-[22px] font-bold text-center mb-16'>Products</h2>
                 {
                     loading
-                        ? (<h2 className='text-xl font-semibold py-5 text-center'>Loading...</h2>)
+                        ? (
+                            <div className='flex justify-center items-center my-32'>
+                                <l-hourglass
+                                    size="75"
+                                    speed="1.75"
+                                    color='#081B31'
+                                ></l-hourglass>
+                            </div>
+                        )
                         : (
                             products.length === 0
                                 ? (

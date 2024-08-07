@@ -1,10 +1,12 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 //Firebase
 import { db, storage } from '../Firebase/firebase.config';
 import { collection, addDoc } from 'firebase/firestore';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
+//Loader
+import { hourglass } from 'ldrs';
 
 const AddProducts = () => {
     const navigate = useNavigate();
@@ -58,6 +60,8 @@ const AddProducts = () => {
 
     };
 
+    //Loader Initialization
+    hourglass.register();
 
     return (
         <section className='flex justify-center items-center my-12'>
@@ -65,7 +69,11 @@ const AddProducts = () => {
                 loading
                     ? (
                         <div className='w-[100%] h-[50vh] flex justify-center items-center font-semibold text-xl'>
-                            <h2>Please wait...</h2>
+                            <l-hourglass
+                                size="75"
+                                speed="1.75"
+                                color='#081B31'
+                            ></l-hourglass>
                         </div>
                     )
                     : (

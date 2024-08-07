@@ -3,11 +3,14 @@ import React, { useState } from 'react';
 import login from '../assets/images/login.gif';
 //React Router
 import { Link, useNavigate } from 'react-router-dom';
-import { hover } from '@testing-library/user-event/dist/hover';
 //Firebase
 import { auth } from '../Firebase/firebase.config';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { toast } from 'react-toastify';
+//Loader
+import { quantum } from 'ldrs';
+
+
 
 
 
@@ -35,14 +38,20 @@ const Login = () => {
         }
 
     };
+    //Loader Initialization
+    quantum.register();
 
     return (
         <div>
             {
                 loading
                     ? (
-                        <div className='flex justify-evenly  items-center h-[90vh]'>
-                            <h3>Loading...</h3>
+                        <div className='flex justify-center  items-center h-[90vh]'>
+                            <l-quantum
+                                size="65"
+                                speed="1.75"
+                                color='#081B31'
+                            ></l-quantum>
                         </div>
                     )
                     : (
@@ -86,7 +95,7 @@ const Login = () => {
                         </section>
                     )
             }
-        </div>
+        </div >
     );
 };
 
