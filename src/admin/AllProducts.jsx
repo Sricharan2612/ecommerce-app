@@ -34,8 +34,8 @@ const AllProducts = () => {
 
     return (
         <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0'>
-            <div className='md:w-[85%] lg:w-[75%]'>
-                <h2 className='text-[22px] font-bold text-center mb-16'>Products</h2>
+            <div className='w-[100%] sm:w-[95%]'>
+                <h2 className='text-[22px] font-bold text-center mb-10'>Products</h2>
                 {
                     loading
                         ? (
@@ -54,22 +54,22 @@ const AllProducts = () => {
                                 )
                                 : (
                                     <table className='w-[100%] table-fixed text-center text-[#071822] font-semibold' >
-                                        <thead >
+                                        <thead className='bg-[#333] text-white'>
                                             <tr className='border-b border-[#071822]'>
-                                                <th className='w-[25%] sm:w-[10%]'>Image</th>
-                                                <th className='w-auto sm:w-[20%]'>Title</th>
+                                                <th className='w-[20%] sm:w-auto py-4 sm:py-5'>Image</th>
+                                                <th >Title</th>
                                                 <th className='truncate'>Category</th>
-                                                <th>Price</th>
-                                                <th className='w-auto'>Action</th>
+                                                <th >Price</th>
+                                                <th >Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {products.map((item, index) => (
-                                                <tr key={index} className='border-b border-[#071822] my-2' >
-                                                    <td ><img src={item.imgUrl} alt="" className='sm:w-[150px] sm:h-[150px] object-contain py-2' /></td>
-                                                    <td className='text-sm sm:text-lg'>{item.productName}</td>
-                                                    <td className='text-sm sm:text-lg'> {item.category}</td>
-                                                    <td className='text-sm sm:text-lg'>₹{commaSeperatedPrice(item.price)}</td>
+                                                <tr key={index} className='even:bg-[#eee]' >
+                                                    <td className='flex justify-center'><img src={item.imgUrl} alt="" className='sm:w-[150px] sm:h-[150px] object-contain py-2 aspect-[3/3]' /></td>
+                                                    <td className='text-sm sm:text-lg truncate ps-3 sm:ps-0 py-4 sm:py-5'>{item.productName}</td>
+                                                    <td className='text-sm sm:text-lg truncate py-4 sm:py-5'> {item.category}</td>
+                                                    <td className='text-sm sm:text-lg truncate py-4 sm:py-5'>₹{commaSeperatedPrice(item.price)}</td>
                                                     <td>
                                                         <button
                                                             onClick={() => deleteProduct(item.id, item.productName)}

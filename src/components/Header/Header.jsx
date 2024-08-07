@@ -101,8 +101,8 @@ const Header = () => {
                     </div>
                     <div onClick={() => setMenuList(!menuList)} className='w-[2rem] cursor-pointer' >
                         <div className='flex items-center w-[100px] gap-1'>
-                            <div className='bg-transparent flex justify-center items-center  active:scale-[1.1] duration-75  overflow-hidden'>
-                                <img src={currentUser ? currentUser.photoURL : userIcon} alt="userProfileIcon" className='w-[40px] h-[40px] object-center rounded-full' />
+                            <div className='bg-transparent flex justify-center items-center  active:scale-[1.1] duration-75  overflow-hidden rounded-full'>
+                                <img src={currentUser ? currentUser.photoURL : userIcon} alt="userProfileIcon" className='w-[40px] h-[40px] object-center rounded-full aspect-[3/3] ' />
                             </div>
                             {/* <p style={{ display: currentUser ? 'block' : 'none' }}
                                 className=' hidden sm:block font-[500] text-md md:text-lg'>{currentUser?.displayName}</p> */}
@@ -152,6 +152,14 @@ const Header = () => {
                             </li>
                         </Link>
                     ))}
+                    {currentUser?.email === process.env.REACT_APP_ADMIN_EMAIL
+                        ? (
+                            <Link to='/dashboard'>
+                                <li className='rounded-md font-[500] active:scale-[0.9] duration-100 cursor-pointer'>Admin</li>
+                            </Link>
+                        )
+                        : ''
+                    }
                 </ul>
             </div>
         </header >

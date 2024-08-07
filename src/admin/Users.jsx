@@ -19,8 +19,8 @@ const Users = () => {
 
     return (
         <section className='flex justify-center mt-12 mb-24 px-3 md:px-0'>
-            <div className='md:w-[85%] lg:w-[75%]'>
-                <h2 className='text-[22px] font-bold text-center mb-16'>Users</h2>
+            <div className='w-[100%] sm:w-[95%]'>
+                <h2 className='text-[22px] font-bold text-center mb-10'>Users</h2>
                 {
                     loading
                         ? (
@@ -39,20 +39,20 @@ const Users = () => {
                                 )
                                 : (
                                     <table className='w-[100%] table-fixed text-center text-[#071822] font-semibold' >
-                                        <thead >
+                                        <thead className='bg-[#333] text-white'>
                                             <tr className='border-b border-[#071822] '>
-                                                <th className='w-[25%] sm:w-[10%]'>Image</th>
+                                                <th className='w-[20%] sm:w-auto py-4 sm:py-5'>Image</th>
                                                 <th >Username</th>
-                                                <th >Email</th>
+                                                <th className='truncate'>Email</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {users.map((user, index) => (
-                                                <tr key={index} className='border-b border-[#071822] ' >
-                                                    <td className='flex justify-center'><img src={user.photoURL} alt="" className='w-[80px] h-[90px] sm:w-[100px] sm:h-[130px] object-contain py-2' /></td>
-                                                    <td>{user.displayName}</td>
-                                                    <td className='truncate'> {user.email}</td>
+                                                <tr key={index} className='even:bg-[#eee]' >
+                                                    <td className='flex justify-center'><img src={user.photoURL} alt="" className='w-[80px] h-[90px] sm:w-[100px] sm:h-[130px] object-contain py-2 aspect-[3/3]' /></td>
+                                                    <td className='text-sm sm:text-lg truncate'>{user.displayName}</td>
+                                                    <td className='text-sm sm:text-lg truncate'> {user.email}</td>
                                                     <td>
                                                         <button
                                                             onClick={() => deleteUser(user.uid)}

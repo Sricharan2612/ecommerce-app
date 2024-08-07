@@ -90,7 +90,7 @@ const Tr = ({ item }) => {
 
     return (
         <tr className='border-b border-[#071822] text-lg'>
-            <td ><img src={item.image} alt="" className='w-[130px] h-[130px] object-contain py-2' /></td>
+            <td ><img src={item.image} alt="" className='w-[130px] h-[130px] object-contain py-2 aspect-[3/3]' /></td>
             <td className='truncate'>{item.name}</td>
             <td>₹{commaSeperatedPrice(item.price)}</td>
             <td>{item.quantity}</td>
