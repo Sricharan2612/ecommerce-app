@@ -90,7 +90,7 @@ const Signup = () => {
                         </div>
                     )
                     : (
-                        <section className='flex justify-evenly  items-center gap-5 px-10 lg:px-20 h-[90vh]'>
+                        <section className='flex justify-evenly  items-center sm:gap-5 px-10 lg:px-20 my-20'>
                             <div className='w-auto md:block'>
                                 <img src={signUp} alt="signUpImage" className='w-[100%] object-cover' />
                             </div>
