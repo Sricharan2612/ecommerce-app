@@ -64,7 +64,7 @@ const AddProducts = () => {
     hourglass.register();
 
     return (
-        <section className='flex justify-center items-center my-12'>
+        <section className='flex justify-center items-center my-12 lg:my-20'>
             {
                 loading
                     ? (

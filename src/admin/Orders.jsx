@@ -10,7 +10,7 @@ const Orders = () => {
     };
     console.log(orders);
     return (
-        <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0'>
+        <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0 h-auto lg:h-[60vh]'>
             <div className='w-[w-[100%] sm:w-[95%]'>
                 <h2 className='text-[22px] font-bold text-center mb-10'>Orders</h2>
                 {
