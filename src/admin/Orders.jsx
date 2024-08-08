@@ -8,7 +8,7 @@ const Orders = () => {
     const commaSeperatedPrice = (number) => {
         return number.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
     };
-    console.log(orders);
+
     return (
         <section className='flex justify-center mt-12 mb-24 px-3 sm:px-0 h-auto lg:h-[60vh]'>
             <div className='w-[w-[100%] sm:w-[95%]'>

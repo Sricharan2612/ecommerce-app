@@ -37,7 +37,7 @@ const Header = () => {
                 navigate('/home');
             })
             .catch((error) => {
-                toast.error(error.message);
+                toast.error(error.message.split('/')[1].split('-').join(' ').split(')')[0]);
             });
 
     };
@@ -57,7 +57,6 @@ const Header = () => {
         },
     ];
 
-    console.log(adminEmail);
 
     return (
         <header className='w-full h-[4.5rem] bg-white px-4 py-4 sticky top-0 left-0 z-40 shadow-xl'>

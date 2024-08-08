@@ -46,7 +46,7 @@ const Signup = () => {
                     console.log('Upload is ' + progress + '% done');
                 },
                 (error) => {
-                    toast.error(error.message);
+                    toast.error(error.message.split('/')[1].split('-').join(' ').split(')')[0]);
                 },
                 async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);

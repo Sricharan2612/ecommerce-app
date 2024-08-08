@@ -33,7 +33,7 @@ const AddProducts = () => {
             uploadTask.on('state_changed',
                 (snapshot) => { },
                 (error) => {
-                    toast.error(error.message);
+                    toast.error(error.message.split('/')[1].split('-').join(' ').split(')')[0]);
                 },
                 async () => {
                     const downloadURL = await getDownloadURL(uploadTask.snapshot.ref);

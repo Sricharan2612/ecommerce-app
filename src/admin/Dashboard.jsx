@@ -11,6 +11,7 @@ const Dashboard = () => {
     const { data: products } = useGetData('products');
     const { data: users } = useGetData('users');
     const { data: orders } = useGetData('orders');
+
     return (
         <section className='my-20 px-6 h-auto sm:h-[60vh]'>
             <div className='flex justify-center gap-4 xl:gap-28 flex-wrap'>

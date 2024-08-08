@@ -29,7 +29,7 @@ const AdminNav = () => {
                 navigate('/home');
             })
             .catch((error) => {
-                toast.error(error.message);
+                toast.error(error.message.split('/')[1].split('-').join(' ').split(')')[0]);
             });
 
     };
